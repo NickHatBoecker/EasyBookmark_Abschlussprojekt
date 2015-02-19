@@ -5,6 +5,7 @@
 .bookmark {
     padding-bottom: 20px;
     border-bottom: 1px solid #ccc;
+    word-break: break-all;
 }
 
 .bookmark .bootstrap-tagsinput {
