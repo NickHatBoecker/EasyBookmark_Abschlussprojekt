@@ -1,0 +1,76 @@
+{
+  "name": "easybookmark",
+  "version": "3.0.4",
+  "type": "app",
+  "dependencies": {
+    "hoodie-plugin-appconfig": "^2.0.1",
+    "hoodie-plugin-email": "^1.0.0",
+    "hoodie-plugin-global-share": "^3.0.0",
+    "hoodie-plugin-users": "^2.1.0",
+    "hoodie-server": "^2.1.1"
+  },
+  "files": [
+    "www/"
+  ],
+  "engines": {
+    "node": ">=0.10.22"
+  },
+  "scripts": {
+    "start": "node node_modules/hoodie-server/bin/start"
+  },
+  "hoodie": {
+    "plugins": [
+      "hoodie-plugin-appconfig",
+      "hoodie-plugin-email",
+      "hoodie-plugin-users",
+      "hoodie-plugin-global-share"
+    ]
+  },
+  "gitHead": "052537c28362d55bcaa0e403a4219b0922254824",
+  "description": "## Installation",
+  "_id": "my-first-hoodie@3.0.4",
+  "_shasum": "e10c973ed247334f97976cd513e2b3123ed2f31c",
+  "_from": "my-first-hoodie@3.0.4",
+  "_npmVersion": "2.1.18",
+  "_nodeVersion": "0.10.32",
+  "_npmUser": {
+    "name": "gr2m",
+    "email": "gregor@martynus.net"
+  },
+  "maintainers": [
+    {
+      "name": "svnlto",
+      "email": "me@svenlito.com"
+    },
+    {
+      "name": "caolan",
+      "email": "caolan.mcmahon@gmail.com"
+    },
+    {
+      "name": "gr2m",
+      "email": "gregor@martynus.net"
+    },
+    {
+      "name": "jan",
+      "email": "jan@apache.org"
+    },
+    {
+      "name": "espy",
+      "email": "hello@alexfeyerke.com"
+    },
+    {
+      "name": "boennemann",
+      "email": "stephan@boennemann.me"
+    },
+    {
+      "name": "hoodiebot",
+      "email": "stephan@thehoodiefirm.com"
+    }
+  ],
+  "dist": {
+    "shasum": "e10c973ed247334f97976cd513e2b3123ed2f31c",
+    "tarball": "http://registry.npmjs.org/my-first-hoodie/-/my-first-hoodie-3.0.4.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/my-first-hoodie/-/my-first-hoodie-3.0.4.tgz"
+}

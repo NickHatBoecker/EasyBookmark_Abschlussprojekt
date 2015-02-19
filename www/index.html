@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/bootstrap/tagsinput/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <link rel="import" href="modals.html">
+</head>
+  <body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Book it!</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" class="edit-bookmark" data-toggle="modal" data-target="#bookmarkModal" data-headline="Add Bookmark"><span class="glyphicon glyphicon-plus-sign"></span> Add Bookmark</a></li>
+                    <li><a href="#" id="settings-button" data-toggle="modal" data-target="#settingsModal"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" id="username" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{Username} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" id="changePassword">Change password</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" id="sinOout">Sing out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <div id="alerts"></div>
+
+    <div class="container">
+        <div id="bookmarkWrapper">
+            <article class="bookmark">
+                <h3><a href="http://the5kylinerdev.tumblr.com/" target="_blank">http://the5kylinerdev.tumblr.com/</a></h3>
+                <p class="dateline">21.02.2015 | Author: nboecker</p>
+                <input type="text" id="bookmarkKeywords" class="form-control tagsinput" data-role="tagsinput" disabled="disabled" value="test,tes2,test3">
+            </article>
+            <article class="bookmark">
+                <h3><a href="http://the5kylinerdev.tumblr.com/" target="_blank">http://the5kylinerdev.tumblr.com/</a></h3>
+                <p class="dateline">21.02.2015 | Author: nboecker</p>
+                <input type="text" id="bookmarkKeywords" class="form-control tagsinput" data-role="tagsinput" disabled="disabled" value="test,tes2,test3">
+            </article>
+            <article class="bookmark">
+                <h3><a href="http://the5kylinerdev.tumblr.com/" target="_blank">http://the5kylinerdev.tumblr.com/</a></h3>
+                <p class="dateline">21.02.2015 | Author: nboecker</p>
+                <input type="text" id="bookmarkKeywords" class="form-control tagsinput" data-role="tagsinput" disabled="disabled" value="test,tes2,test3">
+            </article>
+            <article class="bookmark">
+                <h3><a href="http://the5kylinerdev.tumblr.com/" target="_blank">http://the5kylinerdev.tumblr.com/</a></h3>
+                <p class="dateline">21.02.2015 | Author: nboecker</p>
+                <input type="text" id="bookmarkKeywords" class="form-control tagsinput" data-role="tagsinput" disabled="disabled" value="test,tes2,test3">
+            </article>
+            <article class="bookmark">
+                <h3><a href="http://the5kylinerdev.tumblr.com/" target="_blank">http://the5kylinerdev.tumblr.com/</a></h3>
+                <p class="dateline">21.02.2015 | Author: nboecker</p>
+                <input type="text" id="bookmarkKeywords" class="form-control tagsinput" data-role="tagsinput" disabled="disabled" value="test,tes2,test3">
+            </article>
+            <article class="bookmark">
+                <h3><a href="http://the5kylinerdev.tumblr.com/" target="_blank">http://the5kylinerdev.tumblr.com/</a></h3>
+                <p class="dateline">21.02.2015 | Author: nboecker</p>
+                <input type="text" id="bookmarkKeywords" class="form-control tagsinput" data-role="tagsinput" disabled="disabled" value="test,tes2,test3">
+            </article>
+        </div>
+    </div> <!-- /.container -->
+
+    <script src="assets/vendor/jquery-2.1.0.min.js"></script>
+    <script src="assets/vendor/bootstrap/bootstrap.js"></script>
+    <script src="assets/vendor/bootstrap/tagsinput/bootstrap-tagsinput.min.js"></script>
+
+    <!-- Load the dynamic version of hoodie.js that includes all the plugin code-->
+    <script src="/_api/_files/hoodie.js"></script>
+
+    <script src="assets/js/bookmarks.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
