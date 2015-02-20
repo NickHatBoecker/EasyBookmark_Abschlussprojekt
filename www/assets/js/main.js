@@ -4,6 +4,11 @@ $(document).ready(function(){
     hoodie = new Hoodie();
     bookmarks = new Bookmarks($('#bookmarkWrapper'));
 
+    bookmarkOrder = {
+        attribute: 'created',
+        direction: $('#sortDirection option:checked').val()
+    };
+
     var usernameButton = $('#username').html().replace('{Username}', hoodie.account.username);
     $('#username').html(usernameButton);
 
@@ -67,6 +72,12 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
 
         bookmarks.sendAlertMail();
     }
+});
+
+// handle changing sort order
+$('#sortDirection').change(function() {
+    bookmarkOrder.direction = $('#sortDirection option:checked').val();
+    bookmarks.paint();
 });
 
 // update modal headline

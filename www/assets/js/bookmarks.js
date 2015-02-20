@@ -15,14 +15,12 @@ function Bookmarks($bookmarkWrapper) {
     }
 
     // show bookmarks
-    function paint() {
+    this.paint = function() {
         // clear wrapper
         $wrapper.html('');
 
-        // order by created, DESC
-        collection.sort(function(a, b) {
-            return (a.created < b.created) ? 1 : -1;
-        });
+        // order by created
+        this.sortBookmarks();
 
         $.each(collection, function(i, bookmark) {
             var html = '<article class="bookmark" data-id="' + bookmark.id + '"><h3><a href="' + bookmark.url + '" target="_blank">' +
@@ -32,7 +30,9 @@ function Bookmarks($bookmarkWrapper) {
 
             $wrapper.append(html);
         });
-    }
+
+        $('.tagsinput').tagsinput();
+    };
 
     this.add = function(bookmark) {
         if (bookmark.visibility) {
@@ -40,7 +40,7 @@ function Bookmarks($bookmarkWrapper) {
         }
 
         collection.push(bookmark);
-        paint();
+        this.paint();
     };
 
     this.update = function(bookmark) {
@@ -51,29 +51,40 @@ function Bookmarks($bookmarkWrapper) {
         }
 
         collection[getBookmarkItemIndexById(bookmark.id)] = bookmark;
-        paint();
+        this.paint();
 
         showBadge('Bookmark updated.', 'success');
     };
 
     this.remove = function(bookmark) {
         collection.splice(getBookmarkItemIndexById(bookmark.id), 1);
-        paint();
+        this.paint();
 
         showBadge('Bookmark removed.', 'success');
     };
 
     this.clear = function() {
         collection = [];
-        paint();
+        this.paint();
     };
+
+    this.sortBookmarks = function() {
+        // order by created
+        collection = collection.sort(function(a, b) {
+            if (bookmarkOrder.direction == 'desc') {
+                return (a.created < b.created) ? 1 : -1;
+            } else {
+                return (a.created > b.created) ? 1 : -1;
+            }
+        });
+    }
 
     /**
      * Send notification mail about new bookmarks
      *
      * @TODO: add link to bookmark in mail body (with anchor to id)
      */
-    function sendAlertMail() {
+    this.sendAlertMail = function() {
         hoodie.store.findAll('usersettings').then(function(userSettings) {
             $.each(userSettings, function() {
                 // do not send mail to user who added the bookmark
