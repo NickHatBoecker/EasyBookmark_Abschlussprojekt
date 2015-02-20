@@ -135,7 +135,7 @@ function showBadge(text, type)
 {
     $('#alerts').hide().prepend(
         '<div class="alert alert-' + type + '" role="alert"' +
-        ' style="position: absolute; top: 52px; width: 100%; z-index: 999999; border-radius: 0;"' +
+        ' style="position: absolute; top: 52px; width: 100%; z-index: 5; border-radius: 0;"' +
         '><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>' +
         '</button>' + text + '</div>'
     ).fadeIn();
