@@ -67,6 +67,13 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
 
         $('#bookmarkModal').modal('hide');
 
+        // Clear all fields
+        $('#bookmarkModal input').each(function() {
+            $('#bookmarkModal #bookmarkUrl').val('');
+            $('#bookmarkModal #bookmarkKeywords').tagsinput('removeAll');
+            $('#bookmarkModal #bookmarkVisibility').prop('checked', false);
+        });
+
         // Show badge
         showBadge('Bookmark saved.', 'success');
 
