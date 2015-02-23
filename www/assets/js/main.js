@@ -18,7 +18,6 @@ $(document).ready(function(){
     // @TODO: Login
     hoodie.account.signOut();
     hoodie.account.signIn('testuser', 'test123');
-    //hoodie.account.signIn('nboecker', 'Apoe7pYdz+');
 
     $('.tagsinput').tagsinput();
 
