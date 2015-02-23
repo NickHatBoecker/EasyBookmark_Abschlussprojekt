@@ -3,6 +3,7 @@
 $(document).ready(function(){
     hoodie = new Hoodie();
     bookmarks = new Bookmarks($('#bookmarkWrapper'));
+    hoodieUrl = 'http://192.168.56.101:6001';
 
     bookmarkOrder = {
         attribute: 'created',
@@ -15,23 +16,15 @@ $(document).ready(function(){
     loadModalContents();
 
     // @TODO: Login
+    hoodie.account.signOut();
     hoodie.account.signIn('testuser', 'test123');
+    //hoodie.account.signIn('nboecker', 'Apoe7pYdz+');
 
     $('.tagsinput').tagsinput();
 
     // initial load of all bookmark items from the store
-    hoodie.store.findAll('bookmark').then(function(allBookmarks) {
-        $(allBookmarks).each(function() {
-            bookmarks.add(this);
-        });
-
-        $('.tagsinput').tagsinput();
-    });
-
-    // when a bookmark changes, update the UI.
-    hoodie.store.on('add:bookmark', bookmarks.add);
-    hoodie.store.on('update:bookmark', bookmarks.update);
-    hoodie.store.on('remove:bookmark', bookmarks.remove);
+    hoodie.store.findAll('bookmark').then(initializeBookmarks);
+    hoodie.global.findAll('bookmark').then(initializeBookmarks);
 
     // clear everything when user logs out,
     hoodie.account.on('signout', bookmarks.clear);
@@ -47,7 +40,7 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
         var bookmarkCreated    = new Date().getTime();
         var bookmarkTags       = $('#bookmarkKeywords').val().split(',');
         var bookmarkAuthor     = hoodie.account.username;
-        var bookmarkVisibility = $('#bookmarkVisibility').val();
+        var bookmarkVisibility = $('#bookmarkVisibility').prop('checked');
 
         var bookmark = {
             url: bookmarkUrl,
@@ -60,10 +53,21 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
         // @TODO: get real id
         if ($(this).data('id')) {
             // Settings already exists, so update
-            hoodie.store.update('bookmark', $(this).data('id'), bookmark);
+            hoodie.store.update('bookmark', $(this).data('id'), bookmark)
+            done(function(updatedBookmark) {
+                bookmarks.update(updatedBookmark);
+            });
         } else {
-            hoodie.store.add('bookmark', bookmark);
+            hoodie.store.add('bookmark', bookmark).
+            done(function(newBookmark) {
+                bookmarks.add(newBookmark);
+
+                if (newBookmark.visibility) {
+                    bookmarks.sendAlertMail(newBookmark)
+                }
+            });
         }
+
 
         $('#bookmarkModal').modal('hide');
 
@@ -76,8 +80,6 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
 
         // Show badge
         showBadge('Bookmark saved.', 'success');
-
-        bookmarks.sendAlertMail();
     }
 });
 
@@ -115,13 +117,16 @@ $(document).on('click', '#settingsModal #saveSettings', function(event) {
             notification: settingsNotification
         };
 
-        hoodie.store.find('usersettings', hoodie.account.username + '-config')
+        hoodie.global.find('usersettings', hoodie.account.username + '-config')
         .done(function() {
             // Settings already exists, so update
             hoodie.store.update('usersettings', userSettings.id, userSettings);
         })
         .fail(function() {
-            hoodie.store.add('usersettings', userSettings);
+            hoodie.store.add('usersettings', userSettings)
+            .done(function(newUserSettings) {
+                hoodie.store.find('usersettings', newUserSettings.id).publish();
+            });
         });
 
         $('#settingsModal').modal('hide');
@@ -151,4 +156,13 @@ function loadModalContents()
     var el = content.querySelector('#modals');
 
     document.body.appendChild(el.cloneNode(true));
+}
+
+function initializeBookmarks(allBookmarks)
+{
+    $(allBookmarks).each(function() {
+        bookmarks.add(this);
+    });
+
+    $('.tagsinput').tagsinput();
 }

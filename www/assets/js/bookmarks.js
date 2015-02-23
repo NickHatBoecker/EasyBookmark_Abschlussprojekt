@@ -23,8 +23,13 @@ function Bookmarks($bookmarkWrapper) {
         this.sortBookmarks();
 
         $.each(collection, function(i, bookmark) {
-            var html = '<article class="bookmark" data-id="' + bookmark.id + '"><h3><a href="' + bookmark.url + '" target="_blank">' +
-                       bookmark.url + '</a></h3><p>' + formatTime(bookmark.created) + ' | ' + 'Author: ' + bookmark.author + '</p>' +
+            var visibility = '';
+            if (!bookmark.visibility) {
+                visibility = ' | <span class="text-danger">Privat</span>';
+            }
+
+            var html = '<article id="' + bookmark.id + '" class="bookmark" data-id="' + bookmark.id + '"><h3><a href="' + bookmark.url + '" target="_blank">' +
+                       bookmark.url + '</a></h3><p>' + formatTime(bookmark.created) + ' | ' + 'Author: ' + bookmark.author + visibility + '</p>' +
                        '<input type="text" id="bookmarkKeywords" class="form-control tagsinput" data-role="tagsinput" disabled="disabled" value="' + bookmark.keywords + '">' +
                        '</article>';
 
@@ -35,12 +40,14 @@ function Bookmarks($bookmarkWrapper) {
     };
 
     this.add = function(bookmark) {
-        if (bookmark.visibility) {
-            hoodie.store.find('bookmarks', bookmark.id).publish();
-        }
+        if (bookmark) {
+            if (bookmark.visibility) {
+                hoodie.store.find('bookmarks', bookmark.id).publish();
+            }
 
-        collection.push(bookmark);
-        this.paint();
+            collection.push(bookmark);
+            this.paint();
+        }
     };
 
     this.update = function(bookmark) {
@@ -81,20 +88,19 @@ function Bookmarks($bookmarkWrapper) {
 
     /**
      * Send notification mail about new bookmarks
-     *
-     * @TODO: add link to bookmark in mail body (with anchor to id)
      */
-    this.sendAlertMail = function() {
-        hoodie.store.findAll('usersettings').then(function(userSettings) {
+    this.sendAlertMail = function(bookmark) {
+        hoodie.global.findAll('usersettings').then(function(userSettings) {
             $.each(userSettings, function() {
                 // do not send mail to user who added the bookmark
-                if (hoodie.account.username + '-config' != this.id) {
+                if (bookmark.author + '-config' != this.id) {
+                    var test = hoodieUrl;
                     // only send mail if user wants to receive notifications
                     if (this.notification) {
                         hoodie.email.send({
                             to: this.email,
                             subject: 'A new bookmark was added!',
-                            text: 'One of your co-workers added a new bookmark. Check it out!',
+                            text: "One of your co-workers added a new bookmark. Check it out!\n\n" + hoodieUrl + '#' + bookmark.id,
                         });
 
                         console.log('sent mail to: "' + this.email + '"');
