@@ -19,6 +19,9 @@ vagrantfile-local:
                 DiuRd5QEKpsN:
                     host: '6002'
                     guest: '6002'
+                cbvCVBVCbcb:
+                    host: '6003'
+                    guest: '6003'
         post_up_message: ''
         provider:
             virtualbox:
