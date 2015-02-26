@@ -12,6 +12,10 @@ html[data-hoodie-account-status=signedout] .hoodie-account-signedout {
   display: block;
 }
 
+.hoodie-accountbar {
+    margin-top: 8px;
+}
+
 /* CUSTOM */
 
 .bootstrap-tagsinput {

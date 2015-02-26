@@ -12,15 +12,7 @@ $(document).ready(function(){
         direction: $('#sortDirection option:checked').val()
     };
 
-    // @TODO: hoodie accountbar
-    var usernameButton = $('#username').html().replace('{Username}', hoodie.account.username);
-    $('#username').html(usernameButton);
-
     loadModalContents();
-
-    // @TODO: real login
-    hoodie.account.signOut();
-    hoodie.account.signIn('testuser', 'test123');
 
     // initialize tagsinput
     $('.tagsinput').tagsinput();
