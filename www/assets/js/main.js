@@ -1,5 +1,7 @@
 //"use strict";
 
+// @TODO: remove visibility, so every call is done via hoodie.global
+
 $(document).ready(function(){
     hoodie = new Hoodie();
     bookmarks = new Bookmarks($('#bookmarkWrapper'));
@@ -10,15 +12,17 @@ $(document).ready(function(){
         direction: $('#sortDirection option:checked').val()
     };
 
+    // @TODO: hoodie accountbar
     var usernameButton = $('#username').html().replace('{Username}', hoodie.account.username);
     $('#username').html(usernameButton);
 
     loadModalContents();
 
-    // @TODO: Login
+    // @TODO: real login
     hoodie.account.signOut();
     hoodie.account.signIn('testuser', 'test123');
 
+    // initialize tagsinput
     $('.tagsinput').tagsinput();
 
     // initial load of all bookmark items from the store
@@ -31,32 +35,25 @@ $(document).ready(function(){
 
 // handle creating / editing a new bookmark
 $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
-    var bookmarkUrl = $('#bookmarkUrl').val();
+    var bookmarkUrl        = $('#bookmarkUrl').val();
+    var bookmarkId         = bookmarks.exists(bookmarkUrl);
+    var bookmarkCreated    = new Date().getTime();
+    var bookmarkTags       = $('#bookmarkKeywords').val().split(',');
+    var bookmarkAuthor     = hoodie.account.username;
+    var bookmarkVisibility = $('#bookmarkVisibility').prop('checked');
 
-    if (bookmarkUrl.length > 0) {
-        // @TODO: url unique validation, search through whole collection
+    var bookmark = {
+        url: bookmarkUrl,
+        created: bookmarkCreated,
+        keywords: bookmarkTags,
+        author: bookmarkAuthor,
+        visibility: bookmarkVisibility,
+    };
 
-        var bookmarkCreated    = new Date().getTime();
-        var bookmarkTags       = $('#bookmarkKeywords').val().split(',');
-        var bookmarkAuthor     = hoodie.account.username;
-        var bookmarkVisibility = $('#bookmarkVisibility').prop('checked');
-
-        var bookmark = {
-            url: bookmarkUrl,
-            created: bookmarkCreated,
-            keywords: bookmarkTags,
-            author: bookmarkAuthor,
-            visibility: bookmarkVisibility,
-        };
-
-        // @TODO: get real id
-        if ($(this).data('id')) {
-            // Settings already exists, so update
-            hoodie.store.update('bookmark', $(this).data('id'), bookmark)
-            done(function(updatedBookmark) {
-                bookmarks.update(updatedBookmark);
-            });
-        } else {
+    if (bookmark.url.length > 0) {
+        // Bookmark does not exists
+        if (bookmarkId == '') {
+            // Add new bookmark
             hoodie.store.add('bookmark', bookmark).
             done(function(newBookmark) {
                 bookmarks.add(newBookmark);
@@ -65,20 +62,34 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
                     bookmarks.sendAlertMail(newBookmark)
                 }
             });
+
+            $('#bookmarkModal').modal('hide');
+
+            // Clear all fields
+            $('#bookmarkModal input').each(function() {
+                $('#bookmarkModal #bookmarkUrl').val('');
+                $('#bookmarkModal #bookmarkKeywords').tagsinput('removeAll');
+                $('#bookmarkModal #bookmarkVisibility').prop('checked', false);
+            });
+
+            showAlert('Bookmark saved.', 'success');
+        } else {
+            // Update bookmark
+            hoodie.global.find('bookmark', bookmarkId)
+            .done(function() {
+                hoodie.store.update('bookmark', bookmark).
+                done(function() {
+                    bookmarks.update(bookmark);
+                });
+            });
+
+            $('#bookmarkModal').modal('hide');
+
+            showAlert('<strong>Bookmark updated.</strong>', 'success');
         }
-
-
-        $('#bookmarkModal').modal('hide');
-
-        // Clear all fields
-        $('#bookmarkModal input').each(function() {
-            $('#bookmarkModal #bookmarkUrl').val('');
-            $('#bookmarkModal #bookmarkKeywords').tagsinput('removeAll');
-            $('#bookmarkModal #bookmarkVisibility').prop('checked', false);
-        });
-
-        // Show badge
-        showBadge('Bookmark saved.', 'success');
+    } else {
+        // @TODO: do not use alert, show error message under url-field
+        showAlert('<strong>Bookmark not saved.</strong> Please provide a URL.', 'danger');
     }
 });
 
@@ -88,11 +99,17 @@ $('#sortDirection').change(function() {
     bookmarks.paint();
 });
 
-// update modal headline
-$('.edit-bookmark').click(function (event) {
+/**
+ * Update modal headline and bookmarkId
+ *
+ * @TODO: add bookmark edit button
+ */
+$('#bookmarkModal .edit-bookmark').click(function (event) {
+    $('#bookmarkModal').data('bookmarkId', $(this).data('id'));
     $('#bookmarkModal').find('.modal-title').text($(this).data('headline'));
 });
 
+// handle open user settings modal
 $('#settings-button').click(function (event) {
     // initial load of current user settings from the store
     hoodie.store.find('usersettings', hoodie.account.username + '-config').done(function(userSettings) {
@@ -130,12 +147,16 @@ $(document).on('click', '#settingsModal #saveSettings', function(event) {
 
         $('#settingsModal').modal('hide');
 
-        // Show badge
-        showBadge('Settings saved.', 'success');
+        showAlert('Settings saved.', 'success');
     }
 });
 
-function showBadge(text, type)
+/**
+ * Show alert with given text, colour is specified by type
+ *
+ * @params string text, type (available types: succes, danger, info, warning)
+ */
+function showAlert(text, type)
 {
     $('#alerts').hide().prepend(
         '<div class="alert alert-' + type + '" role="alert"' +
@@ -146,15 +167,13 @@ function showBadge(text, type)
     $('.alert').delay(4000).fadeOut('slow');
 }
 
+// Load modal HTML
 function loadModalContents()
 {
     var link = document.querySelector('link[rel="import"]');
-    var content = link.import;
+    var modals = link.import.querySelector('#modals');
 
-    // Grab DOM from warning.html's document.
-    var el = content.querySelector('#modals');
-
-    document.body.appendChild(el.cloneNode(true));
+    document.body.appendChild(modals.cloneNode(true));
 }
 
 function initializeBookmarks(allBookmarks)
@@ -163,5 +182,6 @@ function initializeBookmarks(allBookmarks)
         bookmarks.add(this);
     });
 
-    $('.tagsinput').tagsinput();
+    // @TODO: prüfen! reinitialize tagsinput, sollte in add() bereits abgedeckt sein
+    // $('.tagsinput').tagsinput();
 }

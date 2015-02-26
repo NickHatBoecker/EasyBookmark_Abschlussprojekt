@@ -18,8 +18,6 @@ function Bookmarks($bookmarkWrapper) {
     this.paint = function() {
         // clear wrapper
         $wrapper.html('');
-
-        // order by created
         this.sortBookmarks();
 
         $.each(collection, function(i, bookmark) {
@@ -36,14 +34,13 @@ function Bookmarks($bookmarkWrapper) {
             $wrapper.append(html);
         });
 
+        // reinitialize tagsinput
         $('.tagsinput').tagsinput();
     };
 
     this.add = function(bookmark) {
         if (bookmark) {
-            if (bookmark.visibility) {
-                hoodie.store.find('bookmarks', bookmark.id).publish();
-            }
+            hoodie.store.find('bookmarks', bookmark.id).publish();
 
             collection.push(bookmark);
             this.paint();
@@ -60,14 +57,14 @@ function Bookmarks($bookmarkWrapper) {
         collection[getBookmarkItemIndexById(bookmark.id)] = bookmark;
         this.paint();
 
-        showBadge('Bookmark updated.', 'success');
+        showAlert('Bookmark updated.', 'success');
     };
 
     this.remove = function(bookmark) {
         collection.splice(getBookmarkItemIndexById(bookmark.id), 1);
         this.paint();
 
-        showBadge('Bookmark removed.', 'success');
+        showAlert('Bookmark removed.', 'success');
     };
 
     this.clear = function() {
@@ -88,6 +85,8 @@ function Bookmarks($bookmarkWrapper) {
 
     /**
      * Send notification mail about new bookmarks
+     *
+     * @param object bookmark
      */
     this.sendAlertMail = function(bookmark) {
         hoodie.global.findAll('usersettings').then(function(userSettings) {
@@ -110,6 +109,29 @@ function Bookmarks($bookmarkWrapper) {
         });
     };
 
+    /**
+     * Check if given url already exists in collection.
+     * If bookmark exists, bookmark ID is returned, else an empty string
+     *
+     * @param string url
+     * @return string
+     */
+    this.exists = function(url) {
+        for (var i = 0; i < collection.length; i++) {
+            if (collection[i].url == url) {
+                return collection[i].id;
+            }
+        }
+
+        return '';
+    };
+
+    /**
+     * Convert Timestamp to "g A" format
+     *
+     * @papram timestamp dateTime
+     * @return string time
+     */
     function formatTime(dateTime) {
         var date = new Date(dateTime);
 
