@@ -16,7 +16,6 @@
 <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
@@ -27,7 +26,6 @@
                 <a class="navbar-brand" href="#">Book it!</a>
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
@@ -60,6 +58,54 @@
     <div id="alerts"></div>
 
     <div class="container">
+
+        <!-- START hoodie-accountbar -->
+        <div class="hoodie-accountbar">
+            <div class="hoodie-account-signedout">
+                <span class="btn-group">
+                    <button class="btn btn-small btn-inverse" data-hoodie-action="signup">Sign Up</button>
+                    <button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="#" data-hoodie-action="signin">Sign In</a></li>
+                        <li><a href="#" data-hoodie-action="resetpassword">Reset Password</a></li>
+                        <!-- @TODO: Remove! -->
+                        <li><a href="#" data-hoodie-action="destroy">Clear local data</a></li>
+                    </ul>
+                </span>
+            </div><!-- /.hoodie-account-signedout -->
+
+            <div class="hoodie-account-signedin">
+                Hello,
+                <span class="hoodie-username"><!-- usern name will be filled in here --></span>
+                <span class="btn-group">
+                    <button class="btn btn-small btn-inverse" data-hoodie-action="signout">Sign Out</button>
+                    <button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>
+                    </ul>
+                </span>
+            </div><!-- /.hoodie-account-signedin -->
+
+            <div class="hoodie-account-error">
+                Hello,
+                <span class="hoodie-username"><!-- usern name will be filled in here --></span>.
+                <span class="btn-group">
+                    <button class="btn btn-small btn-danger" data-hoodie-action="signin">Authentication error: Sign in again</button>
+                    <button class="btn btn-small dropdown-toggle btn-danger" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="#" data-hoodie-action="signout">Sign out</a></li>
+                    </ul>
+                </span>
+            </div><!-- /.hoodie-account-error -->
+        </div>
+        <!-- END hoodie-accountbar -->
+
         <select id="sortDirection">
             <option value="asc">Ascending by created</option>
             <option value="desc" selected="selected">Descending by created</option>
@@ -74,6 +120,8 @@
 
     <!-- Load the dynamic version of hoodie.js that includes all the plugin code-->
     <script src="/_api/_files/hoodie.js"></script>
+
+    <script src="assets/vendor/hoodie.accountbar.bootstrap.js"></script>
 
     <script src="assets/js/bookmarks.js"></script>
     <script src="assets/js/main.js"></script>
