@@ -1,7 +1,5 @@
 //"use strict";
 
-// @TODO: remove visibility, so every call is done via hoodie.global
-
 $(document).ready(function(){
     hoodie = new Hoodie();
     bookmarks = new Bookmarks($('#bookmarkWrapper'));
@@ -32,14 +30,11 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
     var bookmarkCreated    = new Date().getTime();
     var bookmarkTags       = $('#bookmarkKeywords').val().split(',');
     var bookmarkAuthor     = hoodie.account.username;
-    var bookmarkVisibility = $('#bookmarkVisibility').prop('checked');
-
     var bookmark = {
         url: bookmarkUrl,
         created: bookmarkCreated,
         keywords: bookmarkTags,
         author: bookmarkAuthor,
-        visibility: bookmarkVisibility,
     };
 
     if (bookmark.url.length > 0) {
@@ -50,9 +45,7 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
             done(function(newBookmark) {
                 bookmarks.add(newBookmark);
 
-                if (newBookmark.visibility) {
-                    bookmarks.sendAlertMail(newBookmark)
-                }
+                bookmarks.sendAlertMail(newBookmark)
             });
 
             $('#bookmarkModal').modal('hide');
@@ -61,7 +54,6 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
             $('#bookmarkModal input').each(function() {
                 $('#bookmarkModal #bookmarkUrl').val('');
                 $('#bookmarkModal #bookmarkKeywords').tagsinput('removeAll');
-                $('#bookmarkModal #bookmarkVisibility').prop('checked', false);
             });
 
             showAlert('Bookmark saved.', 'success');

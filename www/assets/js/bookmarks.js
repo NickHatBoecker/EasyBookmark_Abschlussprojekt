@@ -21,13 +21,8 @@ function Bookmarks($bookmarkWrapper) {
         this.sortBookmarks();
 
         $.each(collection, function(i, bookmark) {
-            var visibility = '';
-            if (!bookmark.visibility) {
-                visibility = ' | <span class="text-danger">Privat</span>';
-            }
-
             var html = '<article id="' + bookmark.id + '" class="bookmark" data-id="' + bookmark.id + '"><h3><a href="' + bookmark.url + '" target="_blank">' +
-                       bookmark.url + '</a></h3><p>' + formatTime(bookmark.created) + ' | ' + 'Author: ' + bookmark.author + visibility + '</p>' +
+                       bookmark.url + '</a></h3><p>' + formatTime(bookmark.created) + ' | ' + 'Author: ' + bookmark.author + '</p>' +
                        '<input type="text" id="bookmarkKeywords" class="form-control tagsinput" data-role="tagsinput" disabled="disabled" value="' + bookmark.keywords + '">' +
                        '</article>';
 
@@ -48,11 +43,8 @@ function Bookmarks($bookmarkWrapper) {
     };
 
     this.update = function(bookmark) {
-        if (bookmark.visibility) {
-            hoodie.store.find('bookmarks', bookmark.id).publish();
-        } else {
-            hoodie.store.find('bookmarks', bookmark.id).unpublish();
-        }
+        // @TODO: useless?
+        hoodie.store.find('bookmarks', bookmark.id).publish();
 
         collection[getBookmarkItemIndexById(bookmark.id)] = bookmark;
         this.paint();
