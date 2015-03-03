@@ -18,6 +18,7 @@ function Bookmarks($bookmarkWrapper) {
     this.paint = function() {
         // clear wrapper
         $wrapper.html('');
+
         this.sortBookmarks();
 
         $.each(collection, function(i, bookmark) {
@@ -40,8 +41,6 @@ function Bookmarks($bookmarkWrapper) {
 
     this.add = function(bookmark) {
         if (bookmark) {
-            hoodie.store.find('bookmarks', bookmark.id).publish();
-
             collection.push(bookmark);
             bookmarks.paint();
         }
@@ -49,7 +48,7 @@ function Bookmarks($bookmarkWrapper) {
 
     this.update = function(bookmark) {
         // @TODO: useless?
-        hoodie.store.find('bookmarks', bookmark.id).publish();
+        hoodie.store.find('bookmark', bookmark.id).publish();
 
         collection[getBookmarkItemIndexById(bookmark.id)] = bookmark;
         bookmarks.paint();

@@ -43,8 +43,9 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
             // Add new bookmark
             hoodie.store.add('bookmark', bookmark).
             done(function(newBookmark) {
-                bookmarks.add(newBookmark);
+                hoodie.store.find('bookmark', newBookmark.id).publish();
 
+                bookmarks.add(newBookmark);
                 bookmarks.sendAlertMail(newBookmark)
             });
 
@@ -81,16 +82,6 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
 $('#sortDirection').change(function() {
     bookmarkOrder.direction = $('#sortDirection option:checked').val();
     bookmarks.paint();
-});
-
-/**
- * Update modal headline and bookmarkId
- *
- * @TODO: add bookmark edit button
- */
-$('#bookmarkModal .edit-bookmark').click(function (event) {
-    $('#bookmarkModal').data('bookmarkId', $(this).data('id'));
-    $('#bookmarkModal').find('.modal-title').text($(this).data('headline'));
 });
 
 // handle open user settings modal
@@ -162,12 +153,7 @@ function loadModalContents()
 
 function initializeBookmarks(allBookmarks)
 {
-    hoodie.store.findAll('bookmark').then(function(allBookmarks) {
-        $(allBookmarks).each(function() {
-            bookmarks.add(this);
-        });
-    });
-    hoodie.global.findAll('bookmark').then(function(allBookmarks) {
+    hoodie.global.findAll('bookmark').done(function(allBookmarks) {
         $(allBookmarks).each(function() {
             bookmarks.add(this);
         });
