@@ -23,7 +23,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Book it!</a>
+                <a id="reloadPage" class="navbar-brand" href="#">Book it!</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -50,29 +50,28 @@
                             </button>
                             <ul class="dropdown-menu pull-right">
                                 <li><a href="#" data-hoodie-action="resetpassword">Reset Password</a></li>
-                                <!-- @TODO: Remove! -->
+                                <!-- @TODO: Remove on project end! -->
                                 <li><a href="#" data-hoodie-action="destroy">Clear local data</a></li>
                             </ul>
                         </span>
                     </div><!-- /.hoodie-account-signedout -->
 
                     <div class="hoodie-account-signedin">
-                        Hello,
-                        <span class="hoodie-username"><!-- usern name will be filled in here --></span>
                         <span class="btn-group">
-                            <button class="btn btn-small btn-primary" data-hoodie-action="signout">Sign Out</button>
+                            <button class="btn btn-small btn-primary">
+                                <span class="hoodie-username"><!-- usern name will be filled in here --></span>
+                            </button>
                             <button class="btn btn-small dropdown-toggle btn-primary" data-toggle="dropdown">
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu pull-right">
+                                <li><a href="#" data-hoodie-action="signout">Sign Out</a></li>
                                 <li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>
                             </ul>
                         </span>
                     </div><!-- /.hoodie-account-signedin -->
 
                     <div class="hoodie-account-error">
-                        Hello,
-                        <span class="hoodie-username"><!-- usern name will be filled in here --></span>.
                         <span class="btn-group">
                             <button class="btn btn-small btn-danger" data-hoodie-action="signin">Authentication error: Sign in again</button>
                             <button class="btn btn-small dropdown-toggle btn-danger" data-toggle="dropdown">

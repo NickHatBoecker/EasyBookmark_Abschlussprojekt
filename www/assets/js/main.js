@@ -126,6 +126,11 @@ $(document).on('click', '#settingsModal #saveSettings', function(event) {
     }
 });
 
+$('#reloadPage').click(function(event) {
+    event.preventDefault();
+    location.reload();
+});
+
 /**
  * Show alert with given text, colour is specified by type
  *
