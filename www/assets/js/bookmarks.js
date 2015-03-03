@@ -31,6 +31,11 @@ function Bookmarks($bookmarkWrapper) {
 
         // reinitialize tagsinput
         $('.tagsinput').tagsinput();
+
+        // Disable bootstrap-tagsinput, so it cannot be focused
+        $('.bootstrap-tagsinput input').each(function() {
+            $(this).prop('disabled', true);
+        });
     };
 
     this.add = function(bookmark) {

@@ -165,7 +165,4 @@ function initializeBookmarks(allBookmarks)
     $(allBookmarks).each(function() {
         bookmarks.add(this);
     });
-
-    // @TODO: prüfen! reinitialize tagsinput, sollte in add() bereits abgedeckt sein
-    // $('.tagsinput').tagsinput();
 }
