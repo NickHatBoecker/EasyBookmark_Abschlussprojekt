@@ -43,7 +43,7 @@ function Bookmarks($bookmarkWrapper) {
             hoodie.store.find('bookmarks', bookmark.id).publish();
 
             collection.push(bookmark);
-            this.paint();
+            bookmarks.paint();
         }
     };
 
@@ -52,7 +52,7 @@ function Bookmarks($bookmarkWrapper) {
         hoodie.store.find('bookmarks', bookmark.id).publish();
 
         collection[getBookmarkItemIndexById(bookmark.id)] = bookmark;
-        this.paint();
+        bookmarks.paint();
 
         showAlert('Bookmark updated.', 'success');
     };
@@ -66,7 +66,7 @@ function Bookmarks($bookmarkWrapper) {
 
     this.clear = function() {
         collection = [];
-        this.paint();
+        bookmarks.paint();
     };
 
     this.sortBookmarks = function() {

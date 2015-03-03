@@ -16,10 +16,10 @@ $(document).ready(function(){
     $('.tagsinput').tagsinput();
 
     // initial load of all bookmark items from the store
-    hoodie.store.findAll('bookmark').then(initializeBookmarks);
-    hoodie.global.findAll('bookmark').then(initializeBookmarks);
+    initializeBookmarks();
 
     // clear everything when user logs out,
+    hoodie.account.on('signin', initializeBookmarks);
     hoodie.account.on('signout', bookmarks.clear);
 });
 
@@ -162,7 +162,14 @@ function loadModalContents()
 
 function initializeBookmarks(allBookmarks)
 {
-    $(allBookmarks).each(function() {
-        bookmarks.add(this);
+    hoodie.store.findAll('bookmark').then(function(allBookmarks) {
+        $(allBookmarks).each(function() {
+            bookmarks.add(this);
+        });
+    });
+    hoodie.global.findAll('bookmark').then(function(allBookmarks) {
+        $(allBookmarks).each(function() {
+            bookmarks.add(this);
+        });
     });
 }
