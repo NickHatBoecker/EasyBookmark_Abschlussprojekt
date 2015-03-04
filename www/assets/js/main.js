@@ -10,8 +10,6 @@ $(document).ready(function(){
         direction: $('#sortDirection option:checked').val()
     };
 
-    loadModalContents();
-
     // initialize tagsinput
     $('.tagsinput').tagsinput();
 
@@ -192,15 +190,6 @@ function showAlert(text, type)
         '</button>' + text + '</div>'
     ).fadeIn();
     $('.alert').delay(4000).fadeOut('slow');
-}
-
-// Load modal HTML
-function loadModalContents()
-{
-    var link = document.querySelector('link[rel="import"]');
-    var modals = link.import.querySelector('#modals');
-
-    document.body.appendChild(modals.cloneNode(true));
 }
 
 function initializeBookmarks()
