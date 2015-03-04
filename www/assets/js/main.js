@@ -19,6 +19,7 @@ $(document).ready(function(){
     // clear everything when user logs out,
     hoodie.account.on('signin', initializeBookmarks);
     hoodie.account.on('signout', bookmarks.clear);
+    hoodie.account.on('signout', resetFilter);
 });
 
 // handle creating / editing a new bookmark
@@ -199,4 +200,11 @@ function initializeBookmarks()
             bookmarks.add(this);
         });
     });
+}
+
+// Reset filter on sign out
+function resetFilter()
+{
+    $('#bookmarkSearchKeywords').val('');
+    $('#sortDirection option[value="desc"]').prop('selected', true);
 }

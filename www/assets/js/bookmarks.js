@@ -38,6 +38,10 @@ function Bookmarks($bookmarkWrapper) {
             $wrapper.append(html);
         });
 
+        if (collection.length == 0) {
+            $wrapper.append('<p>No bookmarks found.</p>');
+        }
+
         // reinitialize tagsinput
         $('.tagsinput').tagsinput();
 
