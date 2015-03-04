@@ -19,11 +19,19 @@ function Bookmarks($bookmarkWrapper) {
         // clear wrapper
         $wrapper.html('');
 
-        this.sortBookmarks();
+        bookmarks.sortBookmarks();
 
         $.each(collection, function(i, bookmark) {
-            var html = '<article id="' + bookmark.id + '" class="bookmark" data-id="' + bookmark.id + '"><h3><a href="' + bookmark.url + '" target="_blank">' +
-                       bookmark.url + '</a></h3><p>' + formatTime(bookmark.created) + ' | ' + 'Author: ' + bookmark.author + '</p>' +
+            var currentBookmarkId = window.location.hash;
+            var currentBookmark = '';
+
+            if (bookmark.id == currentBookmarkId.substr(1)) {
+                currentBookmark = '<small><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></small> ';
+            }
+            var html = '<article id="' + bookmark.id + '" class="bookmark" data-id="' + bookmark.id + '">' +
+                       '<button type="button" class="close remove-bookmark" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                       '<h3>' + currentBookmark + '<a href="' + bookmark.url + '" target="_blank">' + bookmark.url + '</a></h3>' +
+                       '<p>' + formatTime(bookmark.created) + ' | ' + 'Author: ' + bookmark.author + '</p>' +
                        '<input type="text" id="bookmarkKeywords" class="form-control tagsinput" data-role="tagsinput" disabled="disabled" value="' + bookmark.keywords + '">' +
                        '</article>';
 
@@ -58,7 +66,7 @@ function Bookmarks($bookmarkWrapper) {
 
     this.remove = function(bookmark) {
         collection.splice(getBookmarkItemIndexById(bookmark.id), 1);
-        this.paint();
+        bookmarks.paint();
 
         showAlert('Bookmark removed.', 'success');
     };
@@ -89,13 +97,12 @@ function Bookmarks($bookmarkWrapper) {
             $.each(userSettings, function() {
                 // do not send mail to user who added the bookmark
                 if (bookmark.author + '-config' != this.id) {
-                    var test = hoodieUrl;
                     // only send mail if user wants to receive notifications
                     if (this.notification) {
                         hoodie.email.send({
                             to: this.email,
                             subject: 'A new bookmark was added!',
-                            text: "One of your co-workers added a new bookmark. Check it out!\n\n" + hoodieUrl + '#' + bookmark.id,
+                            text: "One of your co-workers added a new bookmark. Check it out!\n\n" + window.location.origin + '#' + bookmark.id,
                         });
 
                         console.log('sent mail to: "' + this.email + '"');

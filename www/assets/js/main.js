@@ -41,8 +41,8 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
         // Bookmark does not exists
         if (bookmarkId == '') {
             // Add new bookmark
-            hoodie.store.add('bookmark', bookmark).
-            done(function(newBookmark) {
+            hoodie.store.add('bookmark', bookmark)
+            .done(function(newBookmark) {
                 hoodie.store.find('bookmark', newBookmark.id).publish();
 
                 bookmarks.add(newBookmark);
@@ -129,6 +129,31 @@ $(document).on('click', '#settingsModal #saveSettings', function(event) {
 $('#reloadPage').click(function(event) {
     event.preventDefault();
     location.reload();
+});
+
+// handle remove boookmark
+$('#bookmarkWrapper').on('click', '.remove-bookmark', function(event) {
+    var bookmarkId = $(this).parents('article').data('id');
+
+    hoodie.global.find('bookmark', bookmarkId)
+    .done(function(bookmark) {
+        if (bookmark.author == hoodie.account.username) {
+            hoodie.store.remove('bookmark', bookmark.id)
+            .done(function(oldBookmark) {
+                bookmarks.remove(oldBookmark);
+                showAlert('Bookmark removed.', 'success');
+            })
+            .fail(function(error) {
+                // Bookmark could no be found
+                console.log(error);
+
+                // Remove bookmark from collection anyway
+                bookmarks.remove({ id: error.id });
+            });
+        } else {
+            showAlert('<strong>Bookmark cannot be removed.</strong> You are not allowed to remove other users\' bookmarks.', 'danger');
+        }
+    });
 });
 
 /**
