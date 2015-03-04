@@ -89,7 +89,7 @@ $('#sortDirection').change(function() {
 // handle open user settings modal
 $('#settings-button').click(function (event) {
     // initial load of current user settings from the store
-    hoodie.store.find('usersettings', hoodie.account.username + '-config').done(function(userSettings) {
+    hoodie.global.find('usersettings', hoodie.account.username + '-config').done(function(userSettings) {
         $('#settingsEmail').val(userSettings.email);
         $('#settingsNotification').prop('checked', userSettings.notification);
     });
