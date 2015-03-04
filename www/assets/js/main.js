@@ -27,8 +27,6 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
     var bookmarkUrl        = $('#bookmarkUrl').val();
     var bookmarkId         = bookmarks.exists(bookmarkUrl);
     var bookmarkCreated    = new Date().getTime();
-
-    // @TODO: keywords do not update, it's always "public" and "awesome"
     var bookmarkKeywords   = $('#bookmarkKeywords').val().split(',');
 
     var bookmarkAuthor     = hoodie.account.username;
@@ -147,12 +145,12 @@ $('#bookmarkWrapper').on('click', '.remove-bookmark', function(event) {
     hoodie.global.find('bookmark', bookmarkId)
     .done(function(bookmark) {
         if (bookmark.author == hoodie.account.username) {
-            // Bookmark needs to be unpublished, so other users wont see it anymore
-            hoodie.store.find('bookmark', bookmark.id).unpublish();
-
             // Remove bookmark from store
-            hoodie.store.remove('bookmark', bookmark.id)
+            hoodie.global.remove('bookmark', bookmark.id)
             .done(function(oldBookmark) {
+                // Bookmark needs to be unpublished, so other users wont see it anymore
+                hoodie.store.find('bookmark', oldBookmark.id).unpublish();
+
                 bookmarks.remove(oldBookmark);
                 showAlert('Bookmark removed.', 'success');
             })
@@ -196,9 +194,14 @@ function showAlert(text, type)
 function initializeBookmarks()
 {
     hoodie.global.findAll('bookmark').done(function(allBookmarks) {
-        $(allBookmarks).each(function() {
-            bookmarks.add(this);
-        });
+        if (allBookmarks.length == 0) {
+            // show empty message
+            bookmarks.paint();
+        } else {
+            $(allBookmarks).each(function() {
+                bookmarks.add(this);
+            });
+        }
     });
 }
 
