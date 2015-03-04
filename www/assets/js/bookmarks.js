@@ -55,9 +55,6 @@ function Bookmarks($bookmarkWrapper) {
     };
 
     this.update = function(bookmark) {
-        // @TODO: useless?
-        hoodie.store.find('bookmark', bookmark.id).publish();
-
         collection[getBookmarkItemIndexById(bookmark.id)] = bookmark;
         bookmarks.paint();
 

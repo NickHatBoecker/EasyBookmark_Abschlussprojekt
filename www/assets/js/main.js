@@ -28,12 +28,15 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
     var bookmarkUrl        = $('#bookmarkUrl').val();
     var bookmarkId         = bookmarks.exists(bookmarkUrl);
     var bookmarkCreated    = new Date().getTime();
-    var bookmarkTags       = $('#bookmarkKeywords').val().split(',');
+
+    // @TODO: keywords do not update, it's always "public" and "awesome"
+    var bookmarkKeywords   = $('#bookmarkKeywords').val().split(',');
+
     var bookmarkAuthor     = hoodie.account.username;
     var bookmark = {
         url: bookmarkUrl,
         created: bookmarkCreated,
-        keywords: bookmarkTags,
+        keywords: bookmarkKeywords,
         author: bookmarkAuthor,
     };
 
