@@ -5,7 +5,6 @@
 $(document).ready(function(){
     hoodie = new Hoodie();
     bookmarks = new Bookmarks($('#bookmarkWrapper'));
-    hoodieUrl = 'http://192.168.56.101:6001';
 
     bookmarkOrder = {
         attribute: 'created',
