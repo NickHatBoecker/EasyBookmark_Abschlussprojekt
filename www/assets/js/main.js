@@ -171,6 +171,13 @@ $('#bookmarkWrapper').on('click', '.remove-bookmark', function(event) {
     });
 });
 
+// Handle search click
+$('#bookmarkSearchSubmit').click(function() {
+    var searchKeyword = $('#bookmarkSearchKeywords').val();
+
+    bookmarks.findBookmarksByKeyword(searchKeyword);
+});
+
 /**
  * Show alert with given text, colour is specified by type
  *
@@ -196,7 +203,7 @@ function loadModalContents()
     document.body.appendChild(modals.cloneNode(true));
 }
 
-function initializeBookmarks(allBookmarks)
+function initializeBookmarks()
 {
     hoodie.global.findAll('bookmark').done(function(allBookmarks) {
         $(allBookmarks).each(function() {

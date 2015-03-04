@@ -92,10 +92,26 @@
     <div id="alerts"></div>
 
     <div class="container">
-        <select id="sortDirection">
-            <option value="asc">Ascending by created</option>
-            <option value="desc" selected="selected">Descending by created</option>
-        </select>
+        <div class="page-header">
+            <form class="form-inline">
+                <div class="form-group">
+                    <select id="sortDirection" class="form-control">
+                        <option value="asc">Ascending by created</option>
+                        <option value="desc" selected="selected">Descending by created</option>
+                    </select>
+                </div>
+
+                <div class="form-group pull-right">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="bookmarkSearchKeywords" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" id="bookmarkSearchSubmit" type="button">Go!</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+            </form>
+            <br>
+        </div>
 
         <div id="bookmarkWrapper"></div>
     </div> <!-- /.container -->

@@ -127,6 +127,34 @@ function Bookmarks($bookmarkWrapper) {
     };
 
     /**
+     * By now it is only possible to search for one single keyword
+     *
+     * @param string searchKeyword
+     */
+    this.findBookmarksByKeyword = function(searchKeyword) {
+        // Reset collection
+        bookmarks.clear();
+        hoodie.global.findAll('bookmark').done(function(allBookmarks) {
+            $(allBookmarks).each(function() {
+                bookmarks.add(this);
+            });
+
+            if (searchKeyword) {
+                // Backup and clear collection
+                var oldCollection = collection;
+                bookmarks.clear();
+
+                // Now search for keyword in bookmarkUrl and bookmarkKeywords
+                $.each(oldCollection, function(i, bookmark) {
+                    if ((bookmark.url.search(searchKeyword) >= 0) || ($.inArray(searchKeyword, bookmark.keywords) >= 0)) {
+                        bookmarks.add(bookmark);
+                    }
+                });
+            }
+        });
+    };
+
+    /**
      * Convert Timestamp to "g A" format
      *
      * @papram timestamp dateTime
