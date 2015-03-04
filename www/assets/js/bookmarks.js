@@ -61,15 +61,11 @@ function Bookmarks($bookmarkWrapper) {
     this.update = function(bookmark) {
         collection[getBookmarkItemIndexById(bookmark.id)] = bookmark;
         bookmarks.paint();
-
-        showAlert('Bookmark updated.', 'success');
     };
 
     this.remove = function(bookmark) {
         collection.splice(getBookmarkItemIndexById(bookmark.id), 1);
         bookmarks.paint();
-
-        showAlert('Bookmark removed.', 'success');
     };
 
     this.clear = function() {

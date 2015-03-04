@@ -1,5 +1,7 @@
 //"use strict";
 
+// @TODO: update bookmark
+
 $(document).ready(function(){
     hoodie = new Hoodie();
     bookmarks = new Bookmarks($('#bookmarkWrapper'));
@@ -20,6 +22,9 @@ $(document).ready(function(){
     hoodie.account.on('signin', initializeBookmarks);
     hoodie.account.on('signout', bookmarks.clear);
     hoodie.account.on('signout', resetFilter);
+
+    hoodie.global.on('bookmark:add', bookmarks.add);
+    hoodie.global.on('bookmark:remove', bookmarks.remove);
 });
 
 // handle creating / editing a new bookmark
@@ -44,8 +49,6 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
             hoodie.store.add('bookmark', bookmark)
             .done(function(newBookmark) {
                 hoodie.store.find('bookmark', newBookmark.id).publish();
-
-                bookmarks.add(newBookmark);
                 bookmarks.sendAlertMail(newBookmark)
             });
 
@@ -151,15 +154,7 @@ $('#bookmarkWrapper').on('click', '.remove-bookmark', function(event) {
                 // Bookmark needs to be unpublished, so other users wont see it anymore
                 hoodie.store.find('bookmark', oldBookmark.id).unpublish();
 
-                bookmarks.remove(oldBookmark);
                 showAlert('Bookmark removed.', 'success');
-            })
-            .fail(function(error) {
-                // Bookmark could no be found
-                console.log(error);
-
-                // Remove bookmark from collection anyway
-                bookmarks.remove({ id: error.id });
             });
         } else {
             // Current user is not equal bookmark author
@@ -197,10 +192,6 @@ function initializeBookmarks()
         if (allBookmarks.length == 0) {
             // show empty message
             bookmarks.paint();
-        } else {
-            $(allBookmarks).each(function() {
-                bookmarks.add(this);
-            });
         }
     });
 }
