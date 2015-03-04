@@ -33,3 +33,7 @@ html[data-hoodie-account-status=signedout] .hoodie-account-signedout {
     box-shadow: none;
     padding: 0;
 }
+
+#bookmarkSearchIcon.glyphicon-remove {
+    cursor: pointer;
+}

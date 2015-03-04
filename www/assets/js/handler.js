@@ -140,5 +140,21 @@ $('#bookmarkSearch').submit(function(event) {
     event.preventDefault();
     var searchKeyword = $('#bookmarkSearchKeywords').val();
 
+    if (searchKeyword) {
+        $('#bookmarkSearchIcon').removeClass('glyphicon-search');
+        $('#bookmarkSearchIcon').addClass('glyphicon-remove');
+    } else {
+        $('#bookmarkSearchIcon').removeClass('glyphicon-remove');
+        $('#bookmarkSearchIcon').addClass('glyphicon-search');
+    }
+
     bookmarks.findBookmarksByKeyword(searchKeyword);
+});
+
+// Handle remove search keyword click
+$('#bookmarkSearchIcon').click(function() {
+    if ($(this).hasClass('glyphicon-remove')) {
+        $('#bookmarkSearchKeywords').val('');
+        $('#bookmarkSearch').trigger('submit');
+    }
 });
