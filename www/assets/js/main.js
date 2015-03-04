@@ -141,6 +141,10 @@ $('#bookmarkWrapper').on('click', '.remove-bookmark', function(event) {
     hoodie.global.find('bookmark', bookmarkId)
     .done(function(bookmark) {
         if (bookmark.author == hoodie.account.username) {
+            // Bookmark needs to be unpublished, so other users wont see it anymore
+            hoodie.store.find('bookmark', bookmark.id).unpublish();
+
+            // Remove bookmark from store
             hoodie.store.remove('bookmark', bookmark.id)
             .done(function(oldBookmark) {
                 bookmarks.remove(oldBookmark);
@@ -154,6 +158,7 @@ $('#bookmarkWrapper').on('click', '.remove-bookmark', function(event) {
                 bookmarks.remove({ id: error.id });
             });
         } else {
+            // Current user is not equal bookmark author
             showAlert('<strong>Bookmark cannot be removed.</strong> You are not allowed to remove other users\' bookmarks.', 'danger');
         }
     });
