@@ -76,8 +76,9 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
             showAlert('<strong>Bookmark updated.</strong>', 'success');
         }
     } else {
-        // @TODO: do not use alert, show error message under url-field
-        showAlert('<strong>Bookmark not saved.</strong> Please provide a URL.', 'danger');
+        if ($('#bookmarkUrl + .text-danger').length < 1) {
+            $('#bookmarkUrl').after('<p class="text-danger">Please provide a URL.</p>');
+        }
     }
 });
 
@@ -94,6 +95,12 @@ $('#settings-button').click(function (event) {
         $('#settingsEmail').val(userSettings.email);
         $('#settingsNotification').prop('checked', userSettings.notification);
     });
+});
+
+// handle modal close
+$('body').on('hide.bs.modal', '#bookmarkModal', function() {
+    // Remove error message
+    $('#bookmarkUrl + .text-danger').remove();
 });
 
 // handle update user settings
