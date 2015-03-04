@@ -146,7 +146,7 @@ function Bookmarks($bookmarkWrapper) {
 
                 // Now search for keyword in bookmarkUrl and bookmarkKeywords
                 $.each(oldCollection, function(i, bookmark) {
-                    if ((bookmark.url.search(searchKeyword) >= 0) || ($.inArray(searchKeyword, bookmark.keywords) >= 0)) {
+                    if ((bookmark.url.toLowerCase().search(searchKeyword) >= 0) || ($.inArray(searchKeyword, bookmark.keywords) >= 0)) {
                         bookmarks.add(bookmark);
                     }
                 });

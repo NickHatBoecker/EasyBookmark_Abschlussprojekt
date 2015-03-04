@@ -136,7 +136,8 @@ $('#bookmarkWrapper').on('click', '.remove-bookmark', function(event) {
 });
 
 // Handle search click
-$('#bookmarkSearchSubmit').click(function() {
+$('#bookmarkSearch').submit(function(event) {
+    event.preventDefault();
     var searchKeyword = $('#bookmarkSearchKeywords').val();
 
     bookmarks.findBookmarksByKeyword(searchKeyword);
