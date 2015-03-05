@@ -116,7 +116,7 @@ function Bookmarks($bookmarkWrapper) {
      * @param string url
      * @return string
      */
-    this.exists = function(url) {
+    this.urlExists = function(url) {
         for (var i = 0; i < collection.length; i++) {
             if (collection[i].url == url) {
                 return collection[i].id;

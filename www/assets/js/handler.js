@@ -1,7 +1,19 @@
+// Handle hoodie actions
+$(document).ready(function() {
+    // Account
+    hoodie.account.on('signin', initializeBookmarks);
+    hoodie.account.on('signout', bookmarks.clear);
+    hoodie.account.on('signout', resetFilter);
+
+    // Global store
+    hoodie.global.on('bookmark:add', bookmarks.add);
+    hoodie.global.on('bookmark:remove', bookmarks.remove);
+});
+
 // Handle creating / editing a new bookmark
 $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
     var bookmarkUrl        = $('#bookmarkUrl').val();
-    var bookmarkId         = bookmarks.exists(bookmarkUrl);
+    var bookmarkId         = bookmarks.urlExists(bookmarkUrl);
     var bookmarkCreated    = new Date().getTime();
     var bookmarkKeywords   = $('#bookmarkKeywords').val().split(',');
 

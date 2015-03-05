@@ -4,7 +4,7 @@
 // @TODO: keywords hängen sich immer in der Datenbank fest, sobald ein lesezeichen gespeichert wurde
 // @TODO: navigation in mobile view
 
-$(document).ready(function(){
+$(document).ready(function() {
     hoodie = new Hoodie();
     bookmarks = new Bookmarks($('#bookmarkWrapper'));
 
@@ -18,12 +18,4 @@ $(document).ready(function(){
 
     // initial load of all bookmark items from the store
     initializeBookmarks();
-
-    // clear everything when user logs out,
-    hoodie.account.on('signin', initializeBookmarks);
-    hoodie.account.on('signout', bookmarks.clear);
-    hoodie.account.on('signout', resetFilter);
-
-    hoodie.global.on('bookmark:add', bookmarks.add);
-    hoodie.global.on('bookmark:remove', bookmarks.remove);
 });
