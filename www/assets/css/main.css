@@ -37,3 +37,7 @@ html[data-hoodie-account-status=signedout] .hoodie-account-signedout {
 #bookmarkSearchIcon.glyphicon-remove {
     cursor: pointer;
 }
+
+.page-header {
+    margin-top: 0;
+}
