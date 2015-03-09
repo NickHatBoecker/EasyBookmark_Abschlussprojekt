@@ -35,7 +35,7 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
 
             // Clear all fields
             $('#bookmarkModal input').each(function() {
-                $('#bookmarkModal #bookmarkUrl').val('');
+                $('#bookmarkModal #bookmarkUrl').val('').prop('disabled', false);
                 $('#bookmarkModal #bookmarkKeywords').val('');
             });
 
@@ -63,7 +63,7 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
 
                             // Clear all fields
                             $('#bookmarkModal input').each(function() {
-                                $('#bookmarkModal #bookmarkUrl').val('');
+                                $('#bookmarkModal #bookmarkUrl').val('').prop('disabled', false);
                                 $('#bookmarkModal #bookmarkKeywords').val('');
                             });
 
@@ -206,7 +206,7 @@ $('#bookmarkWrapper').on('click', '.edit-bookmark', function(event) {
 
     hoodie.global.find('bookmark', bookmarkId)
     .done(function(bookmark) {
-        $('#bookmarkModal #bookmarkUrl').val(bookmark.url);
+        $('#bookmarkModal #bookmarkUrl').val(bookmark.url).prop('disabled', true);
         $('#bookmarkModal #bookmarkKeywords').val(bookmark.keywords);
 
         $('#bookmarkModal').modal('show');
