@@ -1,6 +1,6 @@
 //"use strict";
 
-// @TODO: navigation in mobile view
+// @TODO: write bookit info text for index.html
 
 $(document).ready(function() {
     hoodie = new Hoodie();

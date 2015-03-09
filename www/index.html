@@ -40,32 +40,14 @@
                 <!-- START hoodie-accountbar -->
                 <div class="hoodie-accountbar nav navbar-nav navbar-right">
                     <div class="hoodie-account-signedout">
-                        <span class="btn-group">
-                            <button class="btn btn-small btn-primary" data-hoodie-action="signin">Sign In</button>
-                            <button class="btn btn-small dropdown-toggle btn-primary" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="#" data-hoodie-action="resetpassword">Reset Password</a></li>
-                            </ul>
-                        </span>
+                        <button class="btn btn-primary btn-small btn-block" data-hoodie-action="signin">Sign In</button>
                     </div><!-- /.hoodie-account-signedout -->
 
                     <div class="hoodie-account-signedin">
-                        <span class="btn-group">
-                            <button class="btn btn-small btn-primary">
-                                <span class="hoodie-username"><!-- usern name will be filled in here --></span>
-                            </button>
-                            <button class="btn btn-small dropdown-toggle btn-primary" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="#" data-hoodie-action="signout">Sign Out</a></li>
-                                <li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>
-                                <!-- @TODO: Remove on project end! -->
-                                <li><a href="#" data-hoodie-action="destroy">Clear local data</a></li>
-                            </ul>
-                        </span>
+                        <button class="btn btn-primary btn-small btn-block" data-hoodie-action="signout" title="Sign Out">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                            <span class="hoodie-username"><!-- usern name will be filled in here --></span>
+                        </button>
                     </div><!-- /.hoodie-account-signedin -->
 
                     <div class="hoodie-account-error">
