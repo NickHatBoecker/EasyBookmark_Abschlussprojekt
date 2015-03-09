@@ -24,14 +24,23 @@ function Bookmarks($bookmarkWrapper) {
         $.each(collection, function(i, bookmark) {
             var currentBookmarkId = window.location.hash;
             var currentBookmark = '';
+            var removeBookmark = '';
+            var editBookmark = '';
 
             if (bookmark.id == currentBookmarkId.substr(1)) {
                 currentBookmark = '<small><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></small> ';
             }
+            if (bookmark.author == hoodie.account.username) {
+                removeBookmark = '<button type="button" class="close remove-bookmark" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+            }
+            if (bookmark.author == hoodie.account.username) {
+                editBookmark = '<small><a href="#" class="edit-bookmark"><span class="glyphicon glyphicon-pencil"></span></a></small>';
+            }
+
             var html = '<article id="' + bookmark.id + '" class="bookmark" data-id="' + bookmark.id + '">' +
-                       '<button type="button" class="close remove-bookmark" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                       removeBookmark +
                        '<h3>' + currentBookmark + '<a href="' + bookmark.url + '" target="_blank">' + bookmark.url + '</a> ' +
-                       '<small><a href="#" class="edit-bookmark"><span class="glyphicon glyphicon-pencil"></span></a></small></h3>' +
+                       editBookmark + '</h3>' +
                        '<p>' + formatTime(bookmark.created) + ' | ' + 'Author: ' + bookmark.author + '</p>' +
                        '<ul class="bookmark-keywords list-inline">';
 

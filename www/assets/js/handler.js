@@ -41,31 +41,37 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
 
             showAlert('Bookmark saved.', 'success');
         } else {
-            // Prompt user to accept update
-            var updateIsConfirmed = confirm('Bookmark with id "' + bookmarkId + '" will be updated. Continue?');
+            bookmark.id = bookmarkId;
 
-            if (updateIsConfirmed) {
-                bookmark.id = bookmarkId;
+            hoodie.global.find('bookmark', bookmark.id)
+            .done(function(foundBookmark) {
+                if (foundBookmark.author != hoodie.account.username) {
+                    if ($('#bookmarkUrl + .text-danger').length < 1) {
+                        $('#bookmarkUrl').after('<p class="text-danger">This URL was already saved by ' + foundBookmark.author + '.</p>');
+                    }
+                } else {
+                    // Prompt user to accept update
+                    var updateIsConfirmed = confirm('Bookmark with id "' + bookmarkId + '" will be updated. Continue?');
 
-                // Update bookmark
-                hoodie.global.find('bookmark', bookmark.id)
-                .done(function() {
-                    hoodie.store.update('bookmark', bookmark.id, bookmark)
-                    .done(function(updatedBookmark) {
-                        bookmarks.update(updatedBookmark);
-                    });
-                });
+                    if (updateIsConfirmed) {
+                        // Update bookmark
+                        hoodie.store.update('bookmark', bookmark.id, bookmark)
+                        .done(function(updatedBookmark) {
+                            bookmarks.update(updatedBookmark);
 
-                $('#bookmarkModal').modal('hide');
+                            $('#bookmarkModal').modal('hide');
 
-                // Clear all fields
-                $('#bookmarkModal input').each(function() {
-                    $('#bookmarkModal #bookmarkUrl').val('');
-                    $('#bookmarkModal #bookmarkKeywords').val('');
-                });
+                            // Clear all fields
+                            $('#bookmarkModal input').each(function() {
+                                $('#bookmarkModal #bookmarkUrl').val('');
+                                $('#bookmarkModal #bookmarkKeywords').val('');
+                            });
 
-                showAlert('<strong>Bookmark updated.</strong>', 'success');
-            }
+                            showAlert('<strong>Bookmark updated.</strong>', 'success');
+                        });
+                    }
+                }
+            });
         }
     } else {
         if ($('#bookmarkUrl + .text-danger').length < 1) {
