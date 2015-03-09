@@ -1,7 +1,5 @@
 //"use strict";
 
-// @TODO: write bookit info text for index.html
-
 $(document).ready(function() {
     hoodie = new Hoodie();
     bookmarks = new Bookmarks($('#bookmarkWrapper'));
