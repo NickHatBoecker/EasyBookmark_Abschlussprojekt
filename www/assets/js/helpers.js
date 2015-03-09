@@ -11,7 +11,10 @@ function showAlert(text, type)
         '><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>' +
         '</button>' + text + '</div>'
     ).fadeIn();
-    $('.alert').delay(4000).fadeOut('slow');
+    $('.alert').delay(4000).fadeOut('slow', function() {
+        // Remove alert after fadeOut
+        $(this).remove();
+    });
 }
 
 /**

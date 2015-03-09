@@ -38,3 +38,10 @@ html[data-hoodie-account-status=signedout] .hoodie-account-signedout {
     cursor: pointer;
     margin-left: 5px;
 }
+
+#alerts {
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+    top: 0;
+}
