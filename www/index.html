@@ -26,12 +26,12 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#" class="edit-bookmark" data-toggle="modal" data-target="#bookmarkModal">
+                        <a href="#" class="login-visible" data-toggle="modal" data-target="#bookmarkModal">
                             <span class="glyphicon glyphicon-plus-sign"></span> Add Bookmark
                         </a>
                     </li>
                     <li>
-                        <a href="#" id="settings-button" data-toggle="modal" data-target="#settingsModal">
+                        <a href="#" class="login-visible" id="settings-button" data-toggle="modal" data-target="#settingsModal">
                             <span class="glyphicon glyphicon-cog"></span> Settings
                         </a>
                     </li>
@@ -89,7 +89,7 @@
     <div id="alerts"></div>
 
     <div class="container">
-        <div class="page-header">
+        <div class="page-header login-visible">
             <div class="col-md-6">
                 <form class="form-inline">
                     <div class="form-group">
@@ -121,6 +121,12 @@
         </div>
 
         <div id="bookmarkWrapper"></div>
+
+        <div id="bookmarkInfo" class="jumbotron login-invisible">
+            <h1>Book it!</h1>
+            <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Pellentesque in ipsum id orci porta dapibus. Donec rutrum congue leo eget malesuada. Nulla porttitor accumsan tincidunt. Pellentesque in ipsum id orci porta dapibus. Cras ultricies ligula sed magna dictum porta. Donec rutrum congue leo eget malesuada. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button" data-hoodie-action="signin">Sign in</a></p>
+        </div>
     </div> <!-- /.container -->
 
     <div id="modals">

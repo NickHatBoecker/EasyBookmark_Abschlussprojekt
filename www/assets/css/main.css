@@ -45,3 +45,15 @@ html[data-hoodie-account-status=signedout] .hoodie-account-signedout {
     width: 100%;
     top: 0;
 }
+
+.login-visible,
+.login-invisible,
+.not-logged-in .login-visible,
+.logged-in .login-invisible {
+    display: none;
+}
+
+.not-logged-in .login-invisible,
+.logged-in .login-visible {
+    display: block;
+}

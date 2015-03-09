@@ -45,3 +45,31 @@ function resetFilter()
     $('#settingsModal #settingsEmail').val('');
     $('#settingsModal #settingsNotification').prop('checked', false);
 }
+
+/**
+ * Is called when user signs in
+ */
+function signIn()
+{
+    $('body').removeClass('not-logged-in').addClass('logged-in');
+
+    initializeBookmarks();
+
+    hoodie.account.on('signout', signOut);
+    hoodie.global.on('bookmark:add', bookmarks.add);
+    hoodie.global.on('bookmark:remove', bookmarks.remove);
+}
+
+/**
+ * Is called when user signs out
+ */
+function signOut()
+{
+    resetFilter();
+    bookmarks.clear();
+
+    $('#bookmarkWrapper').html('');
+    $('body').removeClass('logged-in').addClass('not-logged-in');
+
+    hoodie.account.on('signin', signIn);
+}
