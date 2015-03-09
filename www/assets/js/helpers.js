@@ -28,10 +28,13 @@ function initializeBookmarks()
 }
 
 /**
- * Reset filter on sign out
+ * Reset filter and settings on sign out
  */
 function resetFilter()
 {
     $('#bookmarkSearchKeywords').val('');
     $('#sortDirection option[value="desc"]').prop('selected', true);
+
+    $('#settingsModal #settingsEmail').val('');
+    $('#settingsModal #settingsNotification').prop('checked', false);
 }
