@@ -11,9 +11,6 @@ $(document).ready(function() {
         direction: $('#sortDirection option:checked').val()
     };
 
-    // initial load of all bookmark items from the store
-    initializeBookmarks();
-
     /**
      * Handle hoodie actions on page load
      * Must be called after hoodie initialization
