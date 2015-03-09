@@ -18,20 +18,10 @@ html[data-hoodie-account-status=signedout] .hoodie-account-signedout {
 
 /* CUSTOM */
 
-.bootstrap-tagsinput {
-    width: 100%;
-}
-
 .bookmark {
     padding-bottom: 20px;
     border-bottom: 1px solid #ccc;
     word-break: break-all;
-}
-
-.bookmark .bootstrap-tagsinput {
-    border: none;
-    box-shadow: none;
-    padding: 0;
 }
 
 #bookmarkSearchIcon.glyphicon-remove {
