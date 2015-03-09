@@ -42,7 +42,9 @@ html[data-hoodie-account-status=signedout] .hoodie-account-signedout {
     margin-top: 0;
 }
 
-.bookmark-keywords {
-    color: #428bca;
+.bookmark-keywords li {
+    color: #fff;
+    background-color: #428bca;
     cursor: pointer;
+    margin-left: 5px;
 }
