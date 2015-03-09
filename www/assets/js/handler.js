@@ -5,6 +5,14 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
     var bookmarkCreated    = new Date().getTime();
     var bookmarkKeywords   = $('#bookmarkKeywords').val().split(',');
 
+    for (var i = 0; i < bookmarkKeywords.length; i++) {
+        bookmarkKeywords[i] = bookmarkKeywords[i].trim();
+
+        if (bookmarkKeywords[i].trim() == '') {
+            delete bookmarkKeywords[i];
+        }
+    }
+
     var bookmarkAuthor     = hoodie.account.username;
     var bookmark = {
         url: bookmarkUrl,
@@ -28,7 +36,7 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
             // Clear all fields
             $('#bookmarkModal input').each(function() {
                 $('#bookmarkModal #bookmarkUrl').val('');
-                $('#bookmarkModal #bookmarkKeywords').tagsinput('removeAll');
+                $('#bookmarkModal #bookmarkKeywords').val('');
             });
 
             showAlert('Bookmark saved.', 'success');
@@ -62,9 +70,13 @@ $('#sortDirection').change(function() {
 // Handle open user settings modal
 $('#settings-button').click(function (event) {
     // initial load of current user settings from the store
-    hoodie.global.find('usersettings', hoodie.account.username + '-config').done(function(userSettings) {
+    hoodie.global.find('usersettings', hoodie.account.username + '-config')
+    .done(function(userSettings) {
         $('#settingsEmail').val(userSettings.email);
         $('#settingsNotification').prop('checked', userSettings.notification);
+    })
+    .fail(function(error) {
+        console.log(error);
     });
 });
 
@@ -143,9 +155,11 @@ $('#bookmarkSearch').submit(function(event) {
     if (searchKeyword) {
         $('#bookmarkSearchIcon').removeClass('glyphicon-search');
         $('#bookmarkSearchIcon').addClass('glyphicon-remove');
+        $('#bookmarkSearchIcon').attr('title', 'Remove search');
     } else {
         $('#bookmarkSearchIcon').removeClass('glyphicon-remove');
         $('#bookmarkSearchIcon').addClass('glyphicon-search');
+        $('#bookmarkSearchIcon').attr('title', '');
     }
 
     bookmarks.findBookmarksByKeyword(searchKeyword);
@@ -157,4 +171,11 @@ $('#bookmarkSearchIcon').click(function() {
         $('#bookmarkSearchKeywords').val('');
         $('#bookmarkSearch').trigger('submit');
     }
+});
+
+// Trigger submit on keyword click
+$('#bookmarkWrapper').on('click', '.bookmark-keywords li', function() {
+    var keyword = $(this).text();
+    $('#bookmarkSearchKeywords').val(keyword);
+    $('#bookmarkSearch').trigger('submit');
 });

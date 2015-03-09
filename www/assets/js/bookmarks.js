@@ -32,8 +32,14 @@ function Bookmarks($bookmarkWrapper) {
                        '<button type="button" class="close remove-bookmark" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
                        '<h3>' + currentBookmark + '<a href="' + bookmark.url + '" target="_blank">' + bookmark.url + '</a></h3>' +
                        '<p>' + formatTime(bookmark.created) + ' | ' + 'Author: ' + bookmark.author + '</p>' +
-                       '<input type="text" id="bookmarkKeywords" class="form-control tagsinput" data-role="tagsinput" disabled="disabled" value="' + bookmark.keywords + '">' +
-                       '</article>';
+                       '<ul class="bookmark-keywords list-inline">';
+
+            $.each(bookmark.keywords, function(i, bookmarkKeyword) {
+                html += '<li title="Search for \'' + bookmarkKeyword + '\'">' + bookmarkKeyword + '</li>';
+            });
+
+            html += '</ul>' +
+                    '</article>';
 
             $wrapper.append(html);
         });
@@ -41,14 +47,6 @@ function Bookmarks($bookmarkWrapper) {
         if (collection.length == 0) {
             $wrapper.append('<p>No bookmarks found.</p>');
         }
-
-        // reinitialize tagsinput
-        $('.tagsinput').tagsinput();
-
-        // Disable bootstrap-tagsinput, so it cannot be focused
-        $('.bootstrap-tagsinput input').each(function() {
-            $(this).prop('disabled', true);
-        });
     };
 
     this.add = function(bookmark) {

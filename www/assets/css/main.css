@@ -41,3 +41,8 @@ html[data-hoodie-account-status=signedout] .hoodie-account-signedout {
 .page-header {
     margin-top: 0;
 }
+
+.bookmark-keywords {
+    color: #428bca;
+    cursor: pointer;
+}

@@ -13,9 +13,6 @@ $(document).ready(function() {
         direction: $('#sortDirection option:checked').val()
     };
 
-    // initialize tagsinput
-    $('.tagsinput').tagsinput();
-
     // initial load of all bookmark items from the store
     initializeBookmarks();
 
