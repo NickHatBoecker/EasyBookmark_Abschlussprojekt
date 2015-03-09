@@ -23,6 +23,10 @@ function initializeBookmarks()
         if (allBookmarks.length == 0) {
             // show empty message
             bookmarks.paint();
+        } else {
+            $.each(allBookmarks, function(i, bookmark) {
+                bookmarks.add(bookmark);
+            });
         }
     });
 }
