@@ -53,7 +53,7 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
                     hoodie.store.update('bookmark', bookmark.id, bookmark)
                     .done(function(updatedBookmark) {
                         bookmarks.update(updatedBookmark);
-                    })
+                    });
                 });
 
                 $('#bookmarkModal').modal('hide');
@@ -192,3 +192,17 @@ $('#bookmarkWrapper').on('click', '.bookmark-keywords li', function() {
     $('#bookmarkSearchKeywords').val(keyword);
     $('#bookmarkSearch').trigger('submit');
 });
+
+// Handle edit bookmark
+$('#bookmarkWrapper').on('click', '.edit-bookmark', function(event) {
+    event.preventDefault();
+    var bookmarkId = $(this).parents('article').data('id');
+
+    hoodie.global.find('bookmark', bookmarkId)
+    .done(function(bookmark) {
+        $('#bookmarkModal #bookmarkUrl').val(bookmark.url);
+        $('#bookmarkModal #bookmarkKeywords').val(bookmark.keywords);
+
+        $('#bookmarkModal').modal('show');
+    });
+})

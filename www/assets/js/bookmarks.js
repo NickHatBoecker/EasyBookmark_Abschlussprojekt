@@ -30,7 +30,8 @@ function Bookmarks($bookmarkWrapper) {
             }
             var html = '<article id="' + bookmark.id + '" class="bookmark" data-id="' + bookmark.id + '">' +
                        '<button type="button" class="close remove-bookmark" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-                       '<h3>' + currentBookmark + '<a href="' + bookmark.url + '" target="_blank">' + bookmark.url + '</a></h3>' +
+                       '<h3>' + currentBookmark + '<a href="' + bookmark.url + '" target="_blank">' + bookmark.url + '</a> ' +
+                       '<small><a href="#" class="edit-bookmark"><span class="glyphicon glyphicon-pencil"></span></a></small></h3>' +
                        '<p>' + formatTime(bookmark.created) + ' | ' + 'Author: ' + bookmark.author + '</p>' +
                        '<ul class="bookmark-keywords list-inline">';
 
