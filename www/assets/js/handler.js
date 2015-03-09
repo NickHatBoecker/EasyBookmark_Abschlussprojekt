@@ -58,6 +58,12 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
 
                 $('#bookmarkModal').modal('hide');
 
+                // Clear all fields
+                $('#bookmarkModal input').each(function() {
+                    $('#bookmarkModal #bookmarkUrl').val('');
+                    $('#bookmarkModal #bookmarkKeywords').val('');
+                });
+
                 showAlert('<strong>Bookmark updated.</strong>', 'success');
             }
         }
