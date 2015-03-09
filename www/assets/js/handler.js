@@ -41,18 +41,25 @@ $(document).on('click', '#bookmarkModal #saveSettings', function(event) {
 
             showAlert('Bookmark saved.', 'success');
         } else {
-            // Update bookmark
-            hoodie.global.find('bookmark', bookmarkId)
-            .done(function() {
-                hoodie.store.update('bookmark', bookmark).
-                done(function() {
-                    bookmarks.update(bookmark);
+            // Prompt user to accept update
+            var updateIsConfirmed = confirm('Bookmark with id "' + bookmarkId + '" will be updated. Continue?');
+
+            if (updateIsConfirmed) {
+                bookmark.id = bookmarkId;
+
+                // Update bookmark
+                hoodie.global.find('bookmark', bookmark.id)
+                .done(function() {
+                    hoodie.store.update('bookmark', bookmark.id, bookmark)
+                    .done(function(updatedBookmark) {
+                        bookmarks.update(updatedBookmark);
+                    })
                 });
-            });
 
-            $('#bookmarkModal').modal('hide');
+                $('#bookmarkModal').modal('hide');
 
-            showAlert('<strong>Bookmark updated.</strong>', 'success');
+                showAlert('<strong>Bookmark updated.</strong>', 'success');
+            }
         }
     } else {
         if ($('#bookmarkUrl + .text-danger').length < 1) {

@@ -1,7 +1,5 @@
 //"use strict";
 
-// @TODO: update bookmark
-// @TODO: keywords hängen sich immer in der Datenbank fest, sobald ein lesezeichen gespeichert wurde
 // @TODO: navigation in mobile view
 
 $(document).ready(function() {
