@@ -57,6 +57,7 @@ function signIn()
 
     hoodie.account.on('signout', signOut);
     hoodie.global.on('bookmark:add', bookmarks.add);
+    hoodie.global.on('bookmark:update', bookmarks.update);
     hoodie.global.on('bookmark:remove', bookmarks.remove);
 }
 
